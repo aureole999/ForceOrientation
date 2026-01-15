@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Force Orientation</string>
+    <string name="description">Forces all apps to respect your system rotation setting. Lock to Portrait or Landscape using your device\'s rotation lock, and all apps will follow.</string>
+    <string name="grant_permission">Grant Overlay Permission</string>
+    <string name="enable_force_sync">Enable Global Force Sync</string>
+    <string name="auto_start_title">Start on Boot</string>
+    <string name="auto_start_desc">Automatically start when device boots</string>
+    <string name="how_it_works">How it works: Creates an invisible overlay that tells Android to always use your system rotation preference, overriding apps that try to force their own orientation.</string>
+</resources>
