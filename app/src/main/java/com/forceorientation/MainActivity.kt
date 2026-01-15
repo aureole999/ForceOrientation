@@ -1,6 +1,7 @@
 package com.forceorientation
 
 import android.Manifest
+import android.accessibilityservice.AccessibilityServiceInfo
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -10,6 +11,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
+import android.view.accessibility.AccessibilityManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -39,6 +41,15 @@ class MainActivity : AppCompatActivity() {
             requestNotificationPermissionIfNeeded()
         } else {
             Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+        }
+    }
+    
+    private val accessibilitySettingsLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        updateUI()
+        if (isAccessibilityServiceEnabled()) {
+            Toast.makeText(this, "Accessibility service enabled!", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -92,6 +103,10 @@ class MainActivity : AppCompatActivity() {
         binding.btnPermission.setOnClickListener {
             requestOverlayPermission()
         }
+        
+        binding.btnAccessibility.setOnClickListener {
+            openAccessibilitySettings()
+        }
     }
 
     override fun onResume() {
@@ -105,6 +120,7 @@ class MainActivity : AppCompatActivity() {
         val hasPermission = Settings.canDrawOverlays(this)
         val isServiceRunning = ForceService.isRunning
         val isAutoStartEnabled = prefs.getBoolean(BootReceiver.KEY_AUTO_START, false)
+        val isA11yEnabled = isAccessibilityServiceEnabled()
 
         binding.btnPermission.isEnabled = !hasPermission
         binding.btnPermission.text = if (hasPermission) "✓ Permission Granted" else "Grant Overlay Permission"
@@ -114,6 +130,12 @@ class MainActivity : AppCompatActivity() {
         
         binding.switchAutoStart.isEnabled = hasPermission
         binding.switchAutoStart.isChecked = isAutoStartEnabled
+        
+        // Update accessibility button
+        binding.btnAccessibility.text = if (isA11yEnabled) 
+            getString(R.string.accessibility_enabled) 
+        else 
+            getString(R.string.enable_accessibility)
 
         updateStatusText()
         
@@ -188,5 +210,21 @@ class MainActivity : AppCompatActivity() {
             prefs.edit().putBoolean(BootReceiver.KEY_MANUAL_STOP, false).apply()
             updateUI()
         }, 100)
+    }
+    
+    private fun isAccessibilityServiceEnabled(): Boolean {
+        val am = getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
+        val enabledServices = am.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_GENERIC)
+        for (service in enabledServices) {
+            if (service.resolveInfo.serviceInfo.packageName == packageName) {
+                return true
+            }
+        }
+        return false
+    }
+    
+    private fun openAccessibilitySettings() {
+        val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
+        accessibilitySettingsLauncher.launch(intent)
     }
 }

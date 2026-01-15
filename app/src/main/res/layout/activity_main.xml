@@ -153,7 +153,55 @@
 
     </com.google.android.material.card.MaterialCardView>
 
+    <!-- Accessibility Mode Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardAccessibility"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:strokeColor="?attr/colorPrimary"
+        app:strokeWidth="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardStatus">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/accessibility_mode_title"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorPrimary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/accessibility_mode_desc"
+                android:textSize="12sp"
+                android:textColor="?android:attr/textColorSecondary"
+                android:layout_marginBottom="12dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAccessibility"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/enable_accessibility"
+                style="@style/Widget.Material3.Button.TonalButton" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
     <TextView
+        android:id="@+id/tvHowItWorks"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/how_it_works"
@@ -162,6 +210,6 @@
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardStatus" />
+        app:layout_constraintTop_toBottomOf="@id/cardAccessibility" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

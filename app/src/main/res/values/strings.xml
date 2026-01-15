@@ -6,4 +6,12 @@
     <string name="auto_start_title">Start on Boot</string>
     <string name="auto_start_desc">Automatically start when device boots</string>
     <string name="how_it_works">How it works: Creates an invisible overlay that tells Android to always use your system rotation preference, overriding apps that try to force their own orientation.</string>
+    
+    <!-- Accessibility Service -->
+    <string name="accessibility_service_label">Force Orientation</string>
+    <string name="accessibility_service_description">Enables rotation control over system dialogs and privileged windows. This service creates an invisible overlay to enforce your rotation lock setting.</string>
+    <string name="accessibility_mode_title">Accessibility Mode</string>
+    <string name="accessibility_mode_desc">Use for system dialogs (higher privilege)</string>
+    <string name="enable_accessibility">Enable Accessibility Service</string>
+    <string name="accessibility_enabled">✓ Accessibility Service Enabled</string>
 </resources>
